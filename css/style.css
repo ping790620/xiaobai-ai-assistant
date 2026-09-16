@@ -2094,6 +2094,32 @@ button:active {
   text-decoration: underline;
 }
 
+/* 首页「下载 Windows 试用版」醒目按钮 */
+.trial-download-btn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  line-height: 1.4;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, .25);
+  transition: transform .15s, box-shadow .15s;
+}
+.trial-download-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, .35);
+}
+.trial-download-btn:active {
+  transform: translateY(0);
+}
+
 /* 帮助页「意见反馈」卡片（button 复用 .contact-card 样式） */
 .contact-card-feedback {
   font-family: inherit;

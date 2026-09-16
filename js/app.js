@@ -2223,6 +2223,7 @@
     hideCaseDetail: hideCaseDetail,
     openFeedbackModal: openFeedbackModal,
     closeFeedbackModal: closeFeedbackModal,
+    openTrialDownload: openTrialDownload,
     openImgLightbox: openImgLightbox,
     closeImgLightbox: closeImgLightbox
   };
@@ -2373,6 +2374,13 @@
   function closeFeedbackModal() {
     var m = document.getElementById('feedback-modal');
     if (m && m.parentNode) m.parentNode.removeChild(m);
+  }
+
+  // Windows 7 天试用版下载入口。
+  // 统一走 VicroCode 国内托管详情页（国内直连、免备案）；GitHub raw 在国内访问不稳定，不作为默认入口。
+  var TRIAL_DOWNLOAD_URL = 'https://www.vicoco.cn/p431.html';
+  function openTrialDownload() {
+    openExternal(TRIAL_DOWNLOAD_URL);
   }
 
   function openFeedbackModal() {
