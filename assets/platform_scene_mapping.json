@@ -1,0 +1,129 @@
+{
+  "platforms": [
+    {
+      "id": "zhipu",
+      "name": "智谱AI",
+      "short_desc": "国产大模型，新用户送免费额度",
+      "apply_url": "https://open.bigmodel.cn/",
+      "fee_note": "新用户注册送体验额度，用完按量付费",
+      "difficulty": "easy"
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "short_desc": "价格便宜，写代码很强",
+      "apply_url": "https://platform.deepseek.com/",
+      "fee_note": "价格很低，新用户有赠送",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aliyun",
+      "name": "阿里云通义千问",
+      "short_desc": "阿里出品，稳定可靠",
+      "apply_url": "https://bailian.console.aliyun.com/",
+      "fee_note": "部分模型有免费额度",
+      "difficulty": "medium"
+    },
+    {
+      "id": "baidu",
+      "name": "百度文心一言",
+      "short_desc": "百度出品，中文能力好",
+      "apply_url": "https://console.bce.baidu.com/qianfan",
+      "fee_note": "部分模型有免费额度",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bytedance",
+      "name": "豆包（火山引擎）",
+      "short_desc": "字节出品，豆包同款模型",
+      "apply_url": "https://www.volcengine.com/product/doubao",
+      "fee_note": "新用户有免费额度",
+      "difficulty": "medium"
+    },
+    {
+      "id": "xunfei",
+      "name": "讯飞星火",
+      "short_desc": "科大讯飞，语音能力强",
+      "apply_url": "https://www.xfyun.cn/",
+      "fee_note": "新用户有免费额度",
+      "difficulty": "medium"
+    },
+    {
+      "id": "minimax",
+      "name": "MiniMax海螺",
+      "short_desc": "支持语音和视频",
+      "apply_url": "https://www.minimaxi.com/",
+      "fee_note": "新用户有免费额度",
+      "difficulty": "easy"
+    },
+    {
+      "id": "moonshot",
+      "name": "Kimi（月之暗面）",
+      "short_desc": "长文本处理强",
+      "apply_url": "https://platform.moonshot.cn/",
+      "fee_note": "新用户有免费额度",
+      "difficulty": "easy"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "write",
+      "name": "写文章、写报告",
+      "desc": "帮您写工作总结、发言稿、公众号文章等",
+      "recommend": ["zhipu", "aliyun", "baidu"]
+    },
+    {
+      "id": "translate",
+      "name": "翻译文字",
+      "desc": "中英文互译、日常翻译",
+      "recommend": ["deepseek", "zhipu", "aliyun"]
+    },
+    {
+      "id": "code",
+      "name": "写代码、改代码",
+      "desc": "帮您写程序、找bug、解释代码",
+      "recommend": ["deepseek", "zhipu"]
+    },
+    {
+      "id": "summary",
+      "name": "做PPT、总结资料",
+      "desc": "整理长文档、做会议纪要、生成大纲",
+      "recommend": ["moonshot", "zhipu", "aliyun"]
+    },
+    {
+      "id": "chat",
+      "name": "聊天问答、日常助手",
+      "desc": "问问题、出主意、陪聊解闷",
+      "recommend": ["bytedance", "baidu", "zhipu"]
+    },
+    {
+      "id": "image",
+      "name": "画图、生成图片",
+      "desc": "根据描述生成图片、做设计",
+      "recommend": ["bytedance", "baidu"]
+    }
+  ],
+  "tools": [
+    {
+      "id": "chatbox",
+      "name": "Chatbox",
+      "desc": "免费开源的AI对话客户端，支持所有大模型",
+      "download_url": "https://chatboxai.app/",
+      "platform_support": ["windows", "mac", "android", "ios"]
+    },
+    {
+      "id": "cherry-studio",
+      "name": "Cherry Studio",
+      "desc": "界面好看的AI助手，支持多家大模型",
+      "download_url": "https://cherry-ai.com/",
+      "platform_support": ["windows", "mac"]
+    },
+    {
+      "id": "lobe-chat",
+      "name": "Lobe Chat",
+      "desc": "开源AI聊天框架，可在浏览器直接用",
+      "download_url": "https://lobehub.com/",
+      "platform_support": ["web"]
+    }
+  ]
+}

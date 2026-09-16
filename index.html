@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="小白AI管家 - 不懂电脑，也能用上 AI。引导申请大模型 API Key，配置 AI 工具。">
+  <title>小白AI管家</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 顶部标题区 -->
+  <header class="app-header">
+    <h1>小白AI管家</h1>
+    <div class="subtitle">不懂电脑，也能用上 AI</div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main class="main">
+
+    <!-- 首页 -->
+    <section id="page-home" class="page active">
+      <button class="entry-card" onclick="App.switchPage('page-platform')">
+        <div class="card-title">我要选 AI</div>
+        <div class="card-desc">查看各大模型平台，选一个申请"钥匙"（API Key）</div>
+      </button>
+
+      <button class="entry-card" onclick="App.switchPage('page-scene')">
+        <div class="card-title">我不知道选哪个</div>
+        <div class="card-desc">告诉我您想做什么，我来帮您推荐合适的平台</div>
+      </button>
+
+      <button class="entry-card" onclick="App.switchPage('page-tools')">
+        <div class="card-title">AI 工具库</div>
+        <div class="card-desc">下载免费的 AI 工具，把"钥匙"填进去就能用</div>
+      </button>
+
+      <button class="entry-card" onclick="App.switchPage('page-cases')">
+        <div class="card-title">实际案例</div>
+        <div class="card-desc">8个真实场景，手把手教你怎么用 AI 干活</div>
+      </button>
+
+      <button class="home-feedback-link" onclick="App.openFeedbackModal()">
+        💌 有建议或遇到问题？点这里告诉我们
+      </button>
+    </section>
+
+    <!-- 平台选择页 -->
+    <section id="page-platform" class="page">
+      <div class="page-header">
+        <button class="back-btn" onclick="App.goBack()">← 返回</button>
+        <h2 class="page-title">选一个平台，跟着做就行</h2>
+      </div>
+      <p class="page-lead">每个平台都送过免费额度，先选一个开始。</p>
+      <div id="platform-list"></div>
+    </section>
+
+    <!-- 场景推荐页 -->
+    <section id="page-scene" class="page">
+      <div class="page-header">
+        <button class="back-btn" onclick="App.goBack()">← 返回</button>
+        <h2 class="page-title">告诉我你想干什么，我推荐最划算的方案</h2>
+      </div>
+      <div id="scene-buttons"></div>
+      <div id="scene-result"></div>
+    </section>
+
+    <!-- AI 工具下载安装页 -->
+    <section id="page-tools" class="page">
+      <div class="page-header">
+        <button class="back-btn" onclick="App.goBack()">← 返回</button>
+        <h2 class="page-title">装好这些工具，AI 就能干活了</h2>
+      </div>
+
+      <div class="tool-tip-box">
+        💡 建议先用 <strong>DeepSeek 官网</strong>或<strong>通义千问网页版</strong> —— 浏览器打开就能用，不用装软件、不用 API Key。
+      </div>
+
+      <h3 class="tool-category-title">对话 / 文字类 AI</h3>
+      <div id="chat-tools"></div>
+
+      <h3 class="tool-category-title">图像 / 视频类 AI</h3>
+      <div id="multimodal-tools"></div>
+    </section>
+
+    <!-- 实际案例页 -->
+    <section id="page-cases" class="page">
+      <div class="page-header">
+        <button class="back-btn" onclick="App.goBack()">← 返回</button>
+        <h2 class="page-title">实际案例：手把手教你用 AI</h2>
+      </div>
+      <p class="page-lead">每个案例都是真实场景，跟着步骤做，你也能用 AI 干活。</p>
+      <div id="case-list"></div>
+      <div id="case-detail"></div>
+    </section>
+
+    <!-- 粘贴 Key → 生成配置页 -->
+    <section id="page-config" class="page">
+      <div class="page-header">
+        <button class="back-btn" onclick="App.goBack()">← 返回</button>
+        <h2 class="page-title">把 Key 粘进来，我帮你配好</h2>
+      </div>
+
+      <div class="config-card">
+        <div class="field-row">
+          <div class="field-label">选择平台</div>
+          <select id="config-platform" class="platform-select" onchange="App.switchConfigPlatform(this.value)"></select>
+          <div class="field-hint">默认带出你刚才申请的平台，也可以手动切换。</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-label">API Key（钥匙）</div>
+          <div class="key-input-wrap">
+            <input id="config-key" type="password" class="key-input" placeholder="把刚才复制的那串 Key 粘贴到这里" oninput="App.onConfigKeyInput()">
+            <button type="button" id="key-paste" class="paste-btn" onclick="App.pasteApiKey()">📋 粘贴</button>
+            <button id="key-eye" class="eye-btn" onclick="App.toggleKeyVisibility()">👁 显示</button>
+          </div>
+          <div class="field-hint">点输入框后按 Ctrl+V，或直接点「📋 粘贴」按钮。Key 只存在你自己电脑里，不会上传。</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-label">选择模型</div>
+          <div id="model-list"></div>
+        </div>
+
+        <div class="config-actions">
+          <button class="generate-btn" onclick="App.generateConfig()">生成配置</button>
+          <button class="clear-btn" onclick="App.clearSavedKey()">🗑 清除已保存的 Key</button>
+        </div>
+      </div>
+
+      <div id="config-result"></div>
+    </section>
+
+    <!-- 申请 Key 引导页 -->
+    <section id="page-apply" class="page">
+      <div class="page-header">
+        <button class="back-btn" onclick="App.goBack()">← 返回</button>
+        <h2 id="apply-title" class="page-title">申请 Key，跟着做就行</h2>
+      </div>
+
+      <button id="open-apply-btn" class="open-apply-btn">🔗 打开官方申请页</button>
+
+      <div id="tutorial-steps"></div>
+
+      <button class="next-step-btn" onclick="App.renderConfigPage();App.switchPage('page-config')">
+        我已经拿到 Key 了，下一步 →
+      </button>
+
+      <div class="help-section">
+        <div class="help-title">遇到困难？</div>
+        <div id="faq-list"></div>
+        <p class="help-tip">仍解决不了？<a href="#" onclick="App.switchPage('page-help');return false;">查看完整帮助</a>，或拨打平台官方客服电话（以各平台官网公布为准）。</p>
+      </div>
+    </section>
+
+    <!-- 帮助页 -->
+    <section id="page-help" class="page">
+      <div class="page-header">
+        <button class="back-btn" onclick="App.goBack()">← 返回</button>
+        <h2 class="page-title">遇到问题？看这里</h2>
+      </div>
+
+      <!-- 图文教程 -->
+      <div class="help-section-block">
+        <h3 class="help-block-title">图文教程</h3>
+        <div class="help-platform-row">
+          <label for="help-platform">选择平台：</label>
+          <select id="help-platform" onchange="App.switchHelpPlatform(this.value)"></select>
+        </div>
+        <div id="help-tutorial"></div>
+        <a class="download-word-btn" href="各平台申请APIKey保姆级教程.docx" download>📄 下载 Word 版教程</a>
+      </div>
+
+      <!-- 常见问题 -->
+      <div class="help-section-block">
+        <h3 class="help-block-title">常见问题</h3>
+        <div id="help-faq-list"></div>
+      </div>
+
+      <!-- 联系我们 -->
+      <div class="help-section-block">
+        <h3 class="help-block-title">联系我们</h3>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-card-icon">📞</div>
+            <div class="contact-card-title">电话客服</div>
+            <span class="contact-card-status">上线后接入</span>
+            <div class="contact-card-desc">服务时间：工作日 9:00 - 18:00</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">🤖</div>
+            <div class="contact-card-title">AI 客服</div>
+            <span class="contact-card-status">上线后接入</span>
+            <div class="contact-card-desc">7×24 小时在线，常见问题秒回</div>
+          </div>
+          <button type="button" class="contact-card contact-card-feedback" onclick="App.openFeedbackModal()">
+            <div class="contact-card-icon">💌</div>
+            <div class="contact-card-title">意见反馈</div>
+            <span class="contact-card-status contact-card-status-active">点这里直接写</span>
+            <div class="contact-card-desc">建议、报错、吐槽都欢迎，邮件直达我们</div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 合规说明 -->
+    <p class="disclaimer">
+      本应用为引导工具，不存储、不中转您的 API Key；所有价格与信息以各平台官方为准。
+    </p>
+
+  </main>
+
+  <!-- 底部导航 -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-page="page-home">
+      <span class="nav-icon">🏠</span>
+      <span>首页</span>
+    </button>
+    <button class="nav-item" data-page="page-platform">
+      <span class="nav-icon">🤖</span>
+      <span>选平台</span>
+    </button>
+    <button class="nav-item" data-page="page-scene">
+      <span class="nav-icon">💡</span>
+      <span>看场景</span>
+    </button>
+    <button class="nav-item" data-page="page-tools">
+      <span class="nav-icon">📦</span>
+      <span>工具库</span>
+    </button>
+    <button class="nav-item" data-page="page-cases">
+      <span class="nav-icon">📖</span>
+      <span>案例</span>
+    </button>
+  </nav>
+
+  <!-- 脚本 -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
