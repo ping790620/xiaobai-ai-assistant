@@ -741,15 +741,17 @@
       html += buildHermesConfig(agent);
     } else if (agent.config === 'advanced') {
       var key = getSetupKey();
-      html +=
-        '<div class="config-card">' +
-          '<div class="config-card-title">第二步：一键部署模型（开发者预览版）</div>' +
-          '<p class="config-card-desc">点下面按钮，自动把 Key 写入电脑环境变量、把模型和接口地址写入 Harness 的 settings.yaml；第一步安装完成后启动即自动选好模型。</p>' +
-          '<div class="json-actions">';
+      html += '<div class="config-card"><div class="config-card-title">第二步：一键部署模型（开发者预览版）</div>';
+      if (isNative()) {
+        html += '<p class="config-card-desc">点下面按钮，自动把 Key 写入电脑环境变量、把模型和接口地址写入 Harness 的 settings.yaml；第一步安装完成后启动即自动选好模型。</p>';
+      } else {
+        html += '<div class="setup-extra-tip">当前是网页版，不能直接修改电脑文件：点下面按钮生成配置文件，按说明手动执行/放置即可。想要全自动部署，请用 Windows 版（首页有下载入口）。</div>';
+      }
+      html += '<div class="json-actions">';
       if (isNative()) {
         html += '<button type="button" class="setup-btn" onclick="App.nativeDeployHarness()">⚡ 一键部署 ' + escapeHtml(pick.model) + '（写 Key + 配置文件）</button>';
       } else {
-        html += '<button type="button" class="setup-btn" onclick="App.downloadHarnessConfig()">⬇️ 下载一键部署文件（setx 命令 + settings.yaml）</button>';
+        html += '<button type="button" class="setup-btn" onclick="App.downloadHarnessConfig()">⬇️ 下载配置文件（需手动放置）</button>';
       }
       html +=
             '<a href="https://deepseek.com/harness/" target="_blank" rel="noopener noreferrer" class="copy-btn as-link">官方主页</a>' +
@@ -991,12 +993,16 @@
     var key = getSetupKey();
 
     var html = '<div class="config-card"><div class="config-card-title">第二步：一键部署模型到 Hermes</div>';
-    html += '<p class="config-card-desc">点下面按钮，自动把 Key 写进 Hermes 的 .env、模型和提供商写进 config.yaml，不用手动填。</p>';
+    if (isNative()) {
+      html += '<p class="config-card-desc">点下面按钮，自动把 Key 写进 Hermes 的 .env、模型和提供商写进 config.yaml，不用手动填。</p>';
+    } else {
+      html += '<div class="setup-extra-tip">当前是网页版，不能直接修改电脑文件：点下面按钮生成配置文件，按说明手动放进 .hermes 文件夹即可。想要全自动部署，请用 Windows 版（首页有下载入口）。</div>';
+    }
     html += '<div class="json-actions">';
     if (isNative()) {
       html += '<button type="button" class="setup-btn" onclick="App.nativeDeployHermes()">⚡ 一键部署 ' + escapeHtml(pick.model) + ' 到 Hermes（全自动）</button>';
     } else {
-      html += '<button type="button" class="setup-btn" onclick="App.downloadHermesConfig()">⬇️ 下载一键部署文件（内含 .env / config.yaml 和放置路径）</button>';
+      html += '<button type="button" class="setup-btn" onclick="App.downloadHermesConfig()">⬇️ 下载配置文件（需手动放置）</button>';
     }
     html += '</div></div>';
 
